@@ -2,8 +2,11 @@ const http = require("http");
 const https = require("https");
 const { URL } = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
-const config = require("./config");
+const config = require("./lib/config");
 const fs = require("fs");
+const handlers = require("./lib/handlers");
+const helpers = require("./lib/helpers");
+const QueryString = require("querystring");
 
 // Instantiate the HTTP server
 const httpServer = http.createServer(function (req, res) {
@@ -40,7 +43,8 @@ const unifiedServer = function (req, res) {
   const trimmedPath = path.replace(regex, "");
 
   //Get the query string as an object
-  const queryStringObject = fullUrl.searchParams;
+  const queryParams = new URLSearchParams(fullUrl.search);
+  const queryStringObject = QueryString.parse(queryParams.toString());
 
   // get the HTTP method
   const method = req.method.toLowerCase();
@@ -69,7 +73,7 @@ const unifiedServer = function (req, res) {
       queryStringObject: queryStringObject,
       method: method,
       headers: headers,
-      payload: buffer,
+      payload: helpers.parseJsonToObject(buffer),
     };
 
     //Route the request to handler specified in the router
@@ -94,24 +98,9 @@ const unifiedServer = function (req, res) {
   });
 };
 
-//define the handler
-let handlers = {};
-
-//Ping handler
-handlers.ping = function (data, callback) {
-  callback(200);
-};
-//handle not found
-handlers.notFound = function (data, callback) {
-  callback(404);
-};
-
-//Hello handler
-handlers.hello = function (data, callback) {
-  callback(200, { message: "hello world" });
-};
-
 const router = {
   ping: handlers.ping,
   hello: handlers.hello,
+  users: handlers.users,
+  tokens: handlers.tokens,
 };
