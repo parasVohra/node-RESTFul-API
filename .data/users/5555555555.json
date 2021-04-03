@@ -1,1 +1,13 @@
-{"firstName":"Paras","lastName":"Vohra","phone":"5555555555","hashedPassword":"2b9d16f016213d8694e05427b66ffc3e30580e3c62f2c4b2254b3baecdbb8450","tosAgreement":true}
+{
+  "firstName": "Paras",
+  "lastName": "Vohra",
+  "phone": "5555555555",
+  "hashedPassword": "2b9d16f016213d8694e05427b66ffc3e30580e3c62f2c4b2254b3baecdbb8450",
+  "tosAgreement": true,
+  "checks": [
+    "b27yscg71vh60cnor09k",
+    "r6r8nnzdyvpos152hr8m",
+    "le7vd62fxy6t5f8qxgzp",
+    "tg0eawqhr3c4ekfhbcpx"
+  ]
+}
